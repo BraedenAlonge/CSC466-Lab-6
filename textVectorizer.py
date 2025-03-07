@@ -5,6 +5,7 @@ import json
 import math
 from collections import defaultdict, Counter
 from porterstemmer import PorterStemmer
+#TODO: Replace placeholder with actual stop words
 
 # Placeholder until my 90-minute file transfer finishes 😣😭
 STOP_WORDS = {"the", "is", "at", "which", "on", "and", "a", "an", "of", "for", "to", "in"}
