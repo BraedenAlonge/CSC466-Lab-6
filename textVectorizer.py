@@ -124,6 +124,7 @@ def main():
     # NOTE: For optional params, use all 3 if you want to use min_df and at lest 2 for stem
     # Just do not specify true if not needed. ie. python textVectorizer.py ... false x 4
     # Or python textVectorizer.py ... f true
+    # Example run:  python textVectorizer.py "./" "./output/output_vectors.txt" "./output/output_ground_truth.csv" true true
    if len(sys.argv) < 4 or len(sys.argv) > 7:
        print("Usage: python textVectorizer.py <dataset_root> <output_vectors>"
              " <output_ground_truth> [remove_stopwords] [stem] [min_df]")
