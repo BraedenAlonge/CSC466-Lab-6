@@ -14,15 +14,24 @@ def tokenizer(text):
     """Tokenizes text by extracting word characters and converting to lowercase."""
     return re.findall(r'\b\w+\b', text.lower())
 
-def process_tokens(tokens, remove_stopwords=False, use_stemming=False):
+def get_stop_words(remove_stopwords):
+    """ Turn .txt stop words file into a set to use in process_tokens. """
+    if not remove_stopwords:
+        return None
+    with open(remove_stopwords, 'r') as f:
+        sw = {line.strip() for line in f}
+    return sw
+
+def process_tokens(tokens, remove_stopwords=None, use_stemming=False):
     """ Removes stop words (if applied) and uses stemming (if applied) to the token list"""
     processed_tokens = []
     if use_stemming:
         stemmer = PorterStemmer()
     else:
         stemmer = None
+    stop_words = get_stop_words(remove_stopwords)
     for token in tokens:
-        if remove_stopwords and token in STOP_WORDS:
+        if remove_stopwords and token in stop_words:
             continue
         elif use_stemming and stemmer:
             token = stemmer.stem(token, 0, len(token) - 1)
@@ -56,7 +65,7 @@ def traverse_dataset(root_dir):
     return docs
 
 
-def build_vocabulary(documents, remove_stopwords=False, use_stemming=False,min_df=1):
+def build_vocabulary(documents, remove_stopwords=None, use_stemming=False,min_df=1):
     """ Build a vocab from the documents. Return a dictionary vocab mapping token to  unique index, as
     well as df_counts dictionary mapping token to document frequency"""
     df_counts = defaultdict(int)
@@ -78,7 +87,7 @@ def build_vocabulary(documents, remove_stopwords=False, use_stemming=False,min_d
             index += 1
     return vocabulary, df_counts
 
-def compute_tf_idf(documents, vocabulary, df_counts, remove_stopwords=False, use_stemming=False):
+def compute_tf_idf(documents, vocabulary, df_counts, remove_stopwords=None, use_stemming=False):
     """ Compute normalized tf-idf vectors for each doc.
     Return a dict mapping filename > sparse vector representation (token_index -> weight)"""
     N = len(documents)
@@ -123,9 +132,10 @@ def save_ground_truth(documents, output_file):
 
 def main():
     # NOTE: For optional params, use all 3 if you want to use min_df and at lest 2 for stem
-    # Just do not specify true if not needed. ie. python textVectorizer.py ... false x 4
-    # Or python textVectorizer.py ... f true
-    # Example run:  python textVectorizer.py "./" "./output/output_vectors.txt" "./output/output_ground_truth.csv" true true
+    # Just do not specify true if not needed. ie. python textVectorizer.py ... 0 false 4
+    # Or python textVectorizer.py ... 1 true
+    # NOTE: [remove_stopwords] -> 1 = short, 2 = medium, 3 = long
+    # Example run:  python textVectorizer.py "./" "./output/output_vectors.txt" "./output/output_ground_truth.csv" 3 true
    if len(sys.argv) < 4 or len(sys.argv) > 7:
        print("Usage: python textVectorizer.py <dataset_root> <output_vectors>"
              " <output_ground_truth> [remove_stopwords] [stem] [min_df]")
@@ -136,8 +146,17 @@ def main():
    output_ground_truth = sys.argv[3]
 
    # Optional args
-   if len(sys.argv) > 4 and sys.argv[4].upper() == 'TRUE':
-       remove_stopwords = True
+   if len(sys.argv) > 4:
+       if sys.argv[4].upper() == '1':
+            remove_stopwords = "./Stop-Words/sw-short.txt"
+       elif sys.argv[4].upper() == '2':
+            remove_stopwords = "./Stop-Words/sw-medium.txt"
+       elif sys.argv[4].upper() == '3':
+            remove_stopwords = "./Stop-Words/sw-long.txt"
+       else:
+            remove_stopwords = None
+
+
    else: remove_stopwords = False
    if len(sys.argv) > 5 and sys.argv[4].upper() == 'TRUE':
        stem = True
