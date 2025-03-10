@@ -131,7 +131,7 @@ def per_author_metrics(clusters, truth, cluster_info):
                 n_clusters_plurality += 1
 
         if total_docs_written > 0:
-            recall = total_docs_under_plurality / total_docs_written
+            recall = total_docs_correctly_placed / total_docs_written
         else:
             recall = "N/A"
         if total_docs_under_plurality > 0:
