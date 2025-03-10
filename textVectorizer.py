@@ -77,7 +77,7 @@ def build_vocabulary(documents, remove_stopwords=None, use_stemming=False,min_df
         # Count unique tokens
         unique_tokens = set(tokens)
         for token in unique_tokens:
-            df_counts[token] += 1
+            df_counts [token] += 1
     # Filter tokens not meeting minimum document frequency
     vocabulary = {}
     index = 0
@@ -135,7 +135,7 @@ def main():
     # Just do not specify true if not needed. ie. python textVectorizer.py ... 0 false 4
     # Or python textVectorizer.py ... 1 true
     # NOTE: [remove_stopwords] -> 1 = short, 2 = medium, 3 = long
-    # Example run:  python textVectorizer.py "./" "./output/output_vectors.txt" "./output/output_ground_truth.csv" 3 true
+    # Example run: python textVectorizer.py "./" "./output/output_vectors.txt" "./output/output_ground_truth.csv" 3 true
    if len(sys.argv) < 4 or len(sys.argv) > 7:
        print("Usage: python textVectorizer.py <dataset_root> <output_vectors>"
              " <output_ground_truth> [remove_stopwords] [stem] [min_df]")
@@ -158,13 +158,13 @@ def main():
 
 
    else: remove_stopwords = False
-   if len(sys.argv) > 5 and sys.argv[4].upper() == 'TRUE':
+   if len(sys.argv) > 5 and sys.argv[5].upper() == 'TRUE':
        stem = True
    else:
        stem = False
    if len(sys.argv) == 7:
        try:
-           min_df = int(sys.argv[5])
+           min_df = int(sys.argv[6])
        except ValueError:
            print("Error: min_df must be an integer.")
            sys.exit(1)
