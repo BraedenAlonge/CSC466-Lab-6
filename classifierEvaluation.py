@@ -17,15 +17,7 @@ def load_predict_or_gt(file):
     return pred_or_gt
 
 def compute_metrics(ground_truth, predictions):
-    """Computes the following:
-        hits: correct documents
-        misses: misclassified documents, but correct author
-        false_positives: wrong author
-
-        Also computes overall accuracy.
-        Returns stats (dict of ech author to counts),
-         total_correct, total_docs, authors (sorted list of unique auths)"""
-
+    """Computes per-author metrics and accuraccy"""
     # Get sorted list of all authors present in ground truth.
     authors = sorted(list(set(ground_truth.values())))
 
@@ -60,11 +52,6 @@ def compute_metrics(ground_truth, predictions):
 
 # Reused code
 def build_confusion_matrix(ground_truth, predictions, authors):
-    """
-    Builds a confusion matrix as a dictionary of dictionaries.
-    The keys for both dimensions are the author names.
-    Each cell [actual][predicted] contains the count of documents with that outcome.
-    """
     matrix = {actual: {pred: 0 for pred in authors} for actual in authors}
     for filename, actual in ground_truth.items():
         pred = predictions.get(filename, None)

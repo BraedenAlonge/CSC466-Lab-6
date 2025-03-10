@@ -85,7 +85,7 @@ def main():
     print("Converting sparse vectors to a dense matrix...")
     filenames, dense_matrix = convert_to_dense(vectors)
 
-    print("Running KMeans clustering with {} clusters and max_iter {}...".format(num_clusters, max_iter))
+    print(f"Running KMeans clustering with {num_clusters} clusters and max_iter {max_iter}...")
     labels = run_k_means(dense_matrix, num_clusters, max_iter)
 
     print("Saving clustering results...")

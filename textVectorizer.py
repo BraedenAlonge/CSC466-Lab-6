@@ -5,10 +5,6 @@ import json
 import math
 from collections import defaultdict, Counter
 from porterstemmer import PorterStemmer
-#TODO: Replace placeholder with actual stop words
-
-# Placeholder until my 90-minute file transfer finishes 😣😭
-STOP_WORDS = {"the", "is", "at", "which", "on", "and", "a", "an", "of", "for", "to", "in"}
 
 def tokenizer(text):
     """Tokenizes text by extracting word characters and converting to lowercase."""
@@ -23,7 +19,7 @@ def get_stop_words(remove_stopwords):
     return sw
 
 def process_tokens(tokens, remove_stopwords=None, use_stemming=False):
-    """ Removes stop words (if applied) and uses stemming (if applied) to the token list"""
+    """Removes stop words (if applied) and uses stemming (if applied) to the token list"""
     processed_tokens = []
     if use_stemming:
         stemmer = PorterStemmer()
@@ -39,10 +35,7 @@ def process_tokens(tokens, remove_stopwords=None, use_stemming=False):
     return processed_tokens
 
 def traverse_dataset(root_dir):
-    """
-    Traverse the dataset directories (expects 'C50train' and 'C50test' inside root_dir)
-    and returns a list of documents as tuples: (filename, author, text).
-    """
+    """Parses the dataset in the ./C50train and ./C50test directories"""
     docs = []
     for subset in ['C50train', 'C50test']:
         subset_dir = os.path.join(root_dir,subset)
@@ -88,7 +81,7 @@ def build_vocabulary(documents, remove_stopwords=None, use_stemming=False,min_df
     return vocabulary, df_counts
 
 def compute_tf_idf(documents, vocabulary, df_counts, remove_stopwords=None, use_stemming=False):
-    """ Compute normalized tf-idf vectors for each doc.
+    """Compute normalized tf-idf vectors for each doc.
     Return a dict mapping filename > sparse vector representation (token_index -> weight)"""
     N = len(documents)
     # Compute idf vals using smoothed formula

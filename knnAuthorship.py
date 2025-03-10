@@ -35,8 +35,6 @@ def cosine_distance(vec1, vec2):
     return 1 - cosine_sim(vec1, vec2)
 
 def okapi_sim(vector1, vector2):
-    """ TODO: REFINE LATER for idf and term freq"""
-
     sim = 0.0
     for token, value in vector1.items():
         if token in vector2:
