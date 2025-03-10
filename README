@@ -25,6 +25,14 @@ There is no additional code. We reused our functions for building confusion matr
 
 ---
 
+Output Files:
+
+The confusion matrix is in confusion_matrix.csv,
+the kmeans clustering results are in kmeans_clusters.csv, the knn predictions are in knn_predictions.csv,
+the tf-idf vectors are in output_vectors.json/.txt, and the ground truth is in output_ground_truth.csv.
+
+---
+
 Instructions to run:
 1. Make sure the C50 dataset is in the working directory under the folders ./C50train/ and ./C50test/.
 2. Run textVectorizer.py to generate the tf-idf vectors and ground truth file (using stopword removal with either 1/2/3--indicating short medium or long--and stemming either TRUE/FALSE).

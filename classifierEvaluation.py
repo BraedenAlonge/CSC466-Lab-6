@@ -87,7 +87,7 @@ def main():
     if len(sys.argv) > 3:
         conf_matrix_file = sys.argv[3]
     else:
-        conf_matrix_file =  "confusion_matrix.csv"
+        conf_matrix_file = "output/confusion_matrix.csv"
     # Load predictions and gt files
     predictions = load_predict_or_gt(pred_file)
     ground_truth = load_predict_or_gt(gt_file)
