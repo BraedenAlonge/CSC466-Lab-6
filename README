@@ -1,0 +1,32 @@
+CSC466 Lab 6
+
+Names: Braeden Alonge & Nathan Lim
+
+Emails: balonge@calpoly.edu & nlim10@calpoly.edu
+
+---
+
+Executable Programs (matches lab spec):
+
+- textVectorizer.py
+    Usage: python textVectorizer.py <dataset_root> <output_vectors> <output_ground_truth> [stopwords_list (1/2/3)] [stem (TRUE/FALSE)] [min_df]
+- knnAuthorship.py
+    Usage: python knnAuthorship.py <vectors_json> <ground_truth_csv> <similarity_metric: cosine/okapi> <k> [output_predictions]
+- classifierEvaluation.py
+    Usage: python classifierEvaluation.py <predictions_csv> <ground_truth_csv> [confusion_matrix_output_csv]
+- KMeansAuthorship.py
+    Usage: python KMeansAuthorship.py <vectors_json> <num_clusters> [max_iter] [output_file]
+- clusteringEvaluation.py
+    Usage: python clusteringEvaluation.py <clusters_csv> <ground_truth_csv>
+
+---
+
+There is no additional code. We reused our functions for building confusion matrices, but did not include any other reused code.
+
+---
+
+Instructions to run:
+1. Make sure the C50 dataset is in the working directory under the folders ./C50train/ and ./C50test/.
+2. Run textVectorizer.py to generate the tf-idf vectors and ground truth file (using stopword removal with either 1/2/3--indicating short medium or long--and stemming either TRUE/FALSE).
+3. Execute the supervised method with knnAuthorship.py and evaluate using classifierEvaluation.py.
+4. Execute the unsupervised method with KMeansAuthorship.py (50 clusters, 300 max iterations) and evaluate using clusteringEvaluation.py.
